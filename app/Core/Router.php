@@ -26,6 +26,11 @@ class Router {
     }
 
     [$controller, $methodName] = $action;
+    $middleware = $action[2] ?? null;
+
+    if ($middleware) {
+      (new $middleware)->handle();
+    }
 
     $controller = new $controller();
     return $controller->$methodName();
